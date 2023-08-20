@@ -47,6 +47,7 @@ class Mailing(models.Model):
     class Meta:
         verbose_name = 'рассылка'
         verbose_name_plural = 'рассылки'
+        ordering = ['distribution_settings']
 
         permissions = [
             (

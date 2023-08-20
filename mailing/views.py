@@ -21,6 +21,11 @@ class MailingListView(LoginRequiredMixin, ListView):
             queryset = queryset.filter(owner=self.request.user.pk)
         return queryset
 
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+        context_data['message'] = Message.objects.all()
+        return context_data
+
 
 class MailingCreateView(LoginRequiredMixin, CreateView):
     model = Mailing
@@ -41,15 +46,15 @@ class MailingCreateView(LoginRequiredMixin, CreateView):
     def form_valid(self, form):
         formset = self.get_context_data()['formset']
 
-        if formset.is_valid():
-            formset.instance = self.object
-            formset.save()
-
         self.object = form.save()
         self.object.owner = self.request.user
         self.object.save()
 
-        send_mailing(message=Message(mailing_id=self.object.id), mailing=self.object)
+        if formset.is_valid():
+            formset.instance = self.object
+            formset.save()
+
+        send_mailing(message=Message.objects.get(mailing_id=self.object.id))
         return super().form_valid(form)
 
 
@@ -90,8 +95,13 @@ class MailingDeleteView(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('mailing:list_mailing')
 
 
-class MessageDetail(DetailView):
-    model = Message
+class MailingDetail(LoginRequiredMixin, DetailView):
+    model = Mailing
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['message'] = Message.objects.get(mailing=self.object)
+        return context_data
 
 
 class CustomerListView(LoginRequiredMixin, ListView):

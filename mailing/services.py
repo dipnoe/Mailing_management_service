@@ -38,13 +38,13 @@ from config import settings
 from django.utils import timezone
 
 
-def send_mailing(message: Message, mailing: Mailing):
+def send_mailing(message: Message):
     emails = [customer.email for customer in Customer.objects.all()]
 
     current_time = timezone.now().time()
 
-    if (mailing.frequency == 'O'     and
-            mailing.distribution_settings <= current_time):
+    if (message.mailing.frequency == 'O' and
+            message.mailing.distribution_settings <= current_time):
 
         try:
             send_mail(
@@ -54,8 +54,9 @@ def send_mailing(message: Message, mailing: Mailing):
                 emails
             )
             log = Log.objects.create(last_try=current_time, status='S', response='успешно')
-            message.status = 'CO'
-            message.save()
+            print(message.mailing.status)
+            message.mailing.status = 'CO'
+            message.mailing.save()
 
         except Exception as ex:
             log = Log.objects.create(last_try=current_time, status='UNS', response=str(ex))
@@ -64,5 +65,5 @@ def send_mailing(message: Message, mailing: Mailing):
             log.save()
 
     else:
-        message.status = 'LA'
-        message.save()
+        message.mailing.status = 'LA'
+        message.mailing.save()
