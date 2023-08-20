@@ -1,0 +1,29 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+<div class="jumbotron">
+    <div class="container">
+        <h6 class="display-4">Удобный сервис рассылок</h6>
+        <h4 class="text-muted">- количество рассылок всего: {{ mailing_count|length }}</h4>
+        <h4 class="text-muted">- количество активных рассылок: {{ active_mailing_count|length}}</h4>
+        <h4 class="text-muted">- количество уникальных клиентов для рассылок: {{ unique_clients|length }}</h4>
+        <a class="btn btn-lg btn-primary" href="{% url 'mailing:list_mailing' %}" role="button">К рассылкам &raquo;</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mt-5    ">
+        {% for object in blog %}
+        <div class="col-md-4">
+                <img src="/media/{{ object.preview }}" height="250" width="250"
+                     alt="Все будет, но не сразу">
+            <h2>{{ object.title }}</h2>
+            <p>{{ object.body|slice:100}}</p>
+            <p><a class="btn btn-secondary" href="{% url 'blog:detail_blog' object.pk %}" role="button">Читать далее
+                &raquo;</a></p>
+        </div>
+        {% endfor %}
+    </div>
+    <hr>
+</div>
+{% endblock%}

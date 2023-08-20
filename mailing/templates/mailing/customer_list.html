@@ -1,0 +1,44 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+
+<div class="col-lg-6 col-xxl-4 my-5 mx-auto">
+    <div class="d-grid gap-2">
+        <button class="btn btn-outline-secondary" type="button">Не добавлять...</button>
+        <a href="{% url 'mailing:create_customer' %}" class="btn btn-primary">Добавить нового клиента</a>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    Клиенты
+                </div>
+                <div class="card-body">
+                    <table class="table">
+                        <tr>
+                            <th>Фамилия</th>
+                            <th>Имя</th>
+                            <th>Почта</th>
+                            <th></th>
+                        </tr>
+                        {% for object in object_list %}
+                        <tr>
+                            <td>{{ object.last_name }}</td>
+                            <td>{{ object.first_name }}</td>
+                            <td>{{ object.email }}</td>
+                            <td>
+                                <a href="{% url 'mailing:detail_customer' object.pk %}" class="btn btn-dark">
+                                    Перейти &#127793;
+                                </a></td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

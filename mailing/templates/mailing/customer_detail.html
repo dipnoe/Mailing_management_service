@@ -1,0 +1,31 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-8 mt-5">
+            <div class="card mb-3" style="width 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title text-center">
+                        {{ object.last_name }} {{ object.first_name }}
+                    </h5>
+                    <p class="card-text text-start">
+                        <u>Почта:</u> {{ object.email }}
+                        <br>
+                        {% if object.comment is None %}
+                            <u>Комментарий:</u> &mdash;
+                        {% else %}
+                            <u>Комментарий:</u> {{ object.comment }}
+
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="card-footer text-center">
+                    <a class="btn btn-outline-primary" href="{% url 'mailing:update_customer' object.pk %}">Изменить</a>
+                    <a class="btn btn-outline-danger" href="{% url 'mailing:delete_customer' object.pk %}">Удалить</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

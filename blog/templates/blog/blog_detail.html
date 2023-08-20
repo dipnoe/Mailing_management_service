@@ -1,0 +1,22 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+
+    <div class="container-fluid px-3 mt-5">
+        <div class="row justify-content-center">
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="d-inline-flex mb-2 text-muted">Просмотров: {{ object.views_count }}</div>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ object.title }}</h5>
+                        <p class="card-text">{{ object.body }}</p>
+                        <p class="card-text"><small class="text-body-secondary">{{ object.create_date }}</small></p>
+                    </div>
+                    <img src="/media/{{ object.preview }}" height="250" width="250" class="card-img-bottom" >
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

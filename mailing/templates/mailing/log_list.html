@@ -1,0 +1,39 @@
+{% extends 'mailing/base.html' %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row">
+
+        {% for object in object_list %}
+            <div class="col-6 mt-5">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            Логи рассылки {{ object.mailing_settings.id }}
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <tr>
+                                <th>Последняя попытка</th>
+                                <th>Статус</th>
+                                <th>Ответ</th>
+                                <th></th>
+                            </tr>
+                            <tr>
+                                <td>{{ object.last_try }}</td>
+                                <td>{{ object.status }}</td>
+                                <td>{{ object.response }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}
