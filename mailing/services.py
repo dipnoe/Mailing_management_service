@@ -9,7 +9,7 @@ def send_mailing(message: Message):
 
     current_time = timezone.now().time()
 
-    if message.mailing.status == 'CR' and message.mailing.distribution_settings > current_time:
+    if message.mailing.status == 'CR' and message.mailing.distribution_settings < current_time:
 
         try:
             send_mail(
