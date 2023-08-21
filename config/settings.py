@@ -148,9 +148,7 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
 
 CRONJOBS = [
-    ('0 10 * * *', 'mailing.mailing.services.send_mailing', ['D']),
-    ('0 10 * * 1', 'mailing.mailing.services.send_mailing', ['W']),
-    ('0 10 1 * *', 'mailing.mailing.services.send_mailing', ['M']),
+    ('* * * * *', 'mailing.services.mailing_job', '>> /tmp/cronjob_log.log'),
 ]
 
 AUTH_USER_MODEL = 'users.User'

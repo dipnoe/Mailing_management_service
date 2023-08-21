@@ -37,6 +37,7 @@ class Mailing(models.Model):
     status = models.CharField(max_length=15, verbose_name='статус рассылки', choices=STATUS_CHOICES,
                               default=STATUS_CHOICES[0][0])
     is_block = models.BooleanField(verbose_name='заблокирована', default=False)
+    last_mailing_time = models.DateTimeField(verbose_name='последняя рассылка', **NULLABLE)
 
     customer = models.ManyToManyField(Customer, verbose_name='клиент')
     owner = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='владелец рассылки', default=1)
